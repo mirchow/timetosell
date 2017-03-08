@@ -1,13 +1,14 @@
-import React, { Component } from 'react';
-import logo from '../logo.svg';
-import './App.css';
-import Stocks from '../containers/stocks';
+import React, { Component } from "react";
+import "./App.css";
+import Stocks from "../containers/stocks";
+import Title from "../containers/title";
 
 class App extends Component {
   render() {
     return (
       <div className="container">
-      <Stocks/>
+        <Title/>
+        <Stocks/>
       </div>
     );
   }

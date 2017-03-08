@@ -1,13 +1,30 @@
 import React, { Component, PropTypes } from "react";
 import { connect } from "react-redux";
+import { selectStock, fetchStocks } from "./../actions/index";
+import { bindActionCreators } from "redux";
 
-class stocks extends Component {
+class Stocks extends Component {
+
+  componentWillMount() {
+    this.props.fetchStocks();
+  }
 
 
-  constructor(props) {
-    super(props);
+  renderStocks() {
 
-    this.renderStocks = this.renderStocks.bind(this);
+    const { stocks } = this.props.stocks;
+
+    return stocks.map(stock => {
+      return (
+        <li
+          onClick={() => this.props.selectStock(stock) }
+          key={stock.id}
+          className="list-group-item">
+          {stock.id}
+        </li>
+      )
+    });
+
   }
 
   render() {
@@ -21,25 +38,18 @@ class stocks extends Component {
     );
   }
 
-  renderStocks() {
-    return this.props.stocks.map(stock => {
-      return (
-        <li key={stock.id} className="list-group-item">
-          {stock.id}
-        </li>
-      )
-    });
-
-  }
 }
 
-stocks.propTypes = {};
-stocks.defaultProps = {};
+Stocks.propTypes = {};
+Stocks.defaultProps = {};
 
 function mapStateToProps(state) {
-  return {
-    stocks: state.stocks
-  }
+  console.log(`mapStateToProps state: ${state.stocks}`);
+  return {stocks: state.stocks}
 }
 
-export default connect(mapStateToProps,null)(stocks);
+function mapDiscpatchToProps(dispatch) {
+  return bindActionCreators({selectStock, fetchStocks}, dispatch);
+}
+
+export default connect(mapStateToProps, mapDiscpatchToProps)(Stocks);
