@@ -9,9 +9,7 @@ class Stocks extends Component {
     this.props.fetchStocks();
   }
 
-
   renderStocks() {
-
     const { stocks } = this.props.stocks;
 
     return stocks.map(stock => {
