@@ -1,6 +1,10 @@
 import _ from "lodash";
-import { FETCH_STOCKS, SELECT_STOCK } from "./../actions";
 
+// TYPES
+export const SELECT_STOCK = 'SELECT_STOCK';
+export const FETCH_STOCKS = 'FETCH_STOCKS';
+
+// REDUCERS
 const INITIAL_STATE = {
   stocks: [
     {id: 'IBM', name: 'IBM name'},
@@ -9,6 +13,16 @@ const INITIAL_STATE = {
     {id: 'NVDA', name: 'NVidia'}
   ]
 };
+
+// const config = {
+//   apiKey: "AIzaSyCwz62-vr_JDn2ded-tXPkU1Qlis1SlYT4",
+//   authDomain: "time2sell-e2178.firebaseapp.com",
+//   databaseURL: "https://time2sell-e2178.firebaseio.com",
+//   storageBucket: "time2sell-e2178.appspot.com",
+//   messagingSenderId: "911938513703"
+// }
+// firebase.initializeApp(config);
+
 
 export default function (state = INITIAL_STATE, action) {
 
@@ -42,4 +56,25 @@ export default function (state = INITIAL_STATE, action) {
 
 }
 
+// ACTIONS
+
+export function selectStock(stock) {
+  console.log(`action selectStock: stock ${stock.id} stock.name ${stock.name}`);
+
+  return {
+    type: SELECT_STOCK,
+    payload: {
+      id: stock.id + '1',
+      name: stock.name
+    }
+  };
+}
+
+export function fetchStocks() {
+
+  return {
+    type: FETCH_STOCKS,
+    payload: null
+  }
+}
 

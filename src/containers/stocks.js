@@ -1,6 +1,6 @@
-import React, { Component, PropTypes } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
-import { selectStock, fetchStocks } from "./../actions/index";
+import { selectStock, fetchStocks } from "./../reducers/stockReducer";
 import { bindActionCreators } from "redux";
 
 class Stocks extends Component {
