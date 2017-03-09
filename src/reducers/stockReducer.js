@@ -1,4 +1,5 @@
 import _ from "lodash";
+import { firebaseDbRef, firebaseDb } from "./../firebase";
 
 
 // TYPES
@@ -7,22 +8,10 @@ export const FETCH_STOCKS = 'FETCH_STOCKS';
 
 // REDUCERS
 const INITIAL_STATE = {
-  stocks: [
-    {id: 'IBM', name: 'IBM name'},
-    {id: 'F', name: 'Ford'},
-    {id: 'BAC', name: 'Bank of America'},
-    {id: 'NVDA', name: 'NVidia'}
-  ]
+  stocks: []
 };
 
-const config = {
-  apiKey: "AIzaSyCwz62-vr_JDn2ded-tXPkU1Qlis1SlYT4",
-  authDomain: "time2sell-e2178.firebaseapp.com",
-  databaseURL: "https://time2sell-e2178.firebaseio.com",
-  storageBucket: "time2sell-e2178.appspot.com",
-  messagingSenderId: "911938513703"
-}
-// firebase.initializeApp(config);
+const Stocks = firebaseDbRef.child('/users/jMa0kEgnUQdxn4rNDTGsW6gB5uG2');
 
 
 export default function (state = INITIAL_STATE, action) {
@@ -32,10 +21,16 @@ export default function (state = INITIAL_STATE, action) {
   switch (action.type) {
 
     case FETCH_STOCKS:
-      return state;
+      const aaa = {...state,
+        stocks: action.stocks};
+      console.log('reducer-fetchstocks', aaa);
+      return {
+        ...state,
+        stocks: action.stocks
+      }
     case SELECT_STOCK:
       if (_.some(state.stocks, {id: action.payload.id})) {
-        console.log('_some', true);
+
         return state;
       }
 
@@ -49,7 +44,7 @@ export default function (state = INITIAL_STATE, action) {
       // });
 
       // return {stocks: [...state.stocks, {id: action.payload.id + '1', name: action.payload.name}]}
-      return {stocks: [...state.stocks, {...action.payload}]}
+      return {stocks: [...state.stocks, {...action.payload}]};
     default:
       return state;
   }
@@ -72,10 +67,15 @@ export function selectStock(stock) {
 }
 
 export function fetchStocks() {
+  return dispatch => {
+    Stocks.on('value', snapshot => {
+      console.log('snapshot:', snapshot.val().stocks);
+      dispatch({
+        type: FETCH_STOCKS,
+        stocks: snapshot.val().stocks
+      });
+    });
+  };
 
-  return {
-    type: FETCH_STOCKS,
-    payload: null
-  }
 }
 
