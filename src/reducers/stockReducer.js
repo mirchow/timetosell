@@ -1,5 +1,6 @@
 import _ from "lodash";
 
+
 // TYPES
 export const SELECT_STOCK = 'SELECT_STOCK';
 export const FETCH_STOCKS = 'FETCH_STOCKS';
