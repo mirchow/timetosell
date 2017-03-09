@@ -9,16 +9,14 @@ class Stocks extends Component {
     this.props.fetchStocks();
   }
 
-  renderStocks() {
-    const { stocks } = this.props.stocks;
-
-    return stocks.map(stock => {
+  renderStocks(stocks) {
+    return stocks && stocks.map(stock => {
       return (
         <li
           onClick={() => this.props.selectStock(stock) }
-          key={stock.id}
+          key={stock.symbol}
           className="list-group-item">
-          {stock.id}
+          {stock.symbol}
         </li>
       )
     });
@@ -29,7 +27,7 @@ class Stocks extends Component {
     return (
       <div>
         <ul className="list-group">
-          {this.renderStocks()}
+          {this.renderStocks(this.props.stocks)}
         </ul>
 
       </div>
@@ -42,8 +40,11 @@ Stocks.propTypes = {};
 Stocks.defaultProps = {};
 
 function mapStateToProps(state) {
-  console.log(`mapStateToProps state: ${state.stocks}`);
-  return {stocks: state.stocks}
+  console.log('mapStateToProps state', state.stocks);
+  return {
+    stocks: state.stocks.stocks
+  }
+
 }
 
 function mapDiscpatchToProps(dispatch) {

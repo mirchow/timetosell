@@ -18,7 +18,7 @@ const FIREBASE_UI_CONFIG = {
 }
 
 export const firebaseApp = firebase.initializeApp(FIREBASE_CONFIG)
-export const firebaseRef = firebaseApp.database()
+export const firebaseDB = firebaseApp.database()
 export const firebaseAuth = firebaseApp.auth()
 export const firebaseAuthUI = new firebaseui.auth.AuthUI(firebaseAuth)
 export const firebaseUIConfig = FIREBASE_UI_CONFIG
