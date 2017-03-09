@@ -1,3 +1,5 @@
+import firebase from 'firebase'
+
 const FIREBASE_CONFIG = {
   apiKey: "AIzaSyCwz62-vr_JDn2ded-tXPkU1Qlis1SlYT4",
   authDomain: "time2sell-e2178.firebaseapp.com",
@@ -6,9 +8,14 @@ const FIREBASE_CONFIG = {
   messagingSenderId: "911938513703"
 }
 
+firebase.initializeApp(FIREBASE_CONFIG)
+
 const LOGGING_ENABLED = true;
+const firebaseRef = firebase.database.ref()
+const firebaseAuth = firebase.auth
 
 module.exports = {
-  FIREBASE_CONFIG,
+  firebaseRef,
+  firebaseAuth,
   LOGGING_ENABLED
 }
