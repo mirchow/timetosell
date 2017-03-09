@@ -12,17 +12,7 @@ const INITIAL_STATE = {
     {id: 'BAC', name: 'Bank of America'},
     {id: 'NVDA', name: 'NVidia'}
   ]
-};
-
-const config = {
-  apiKey: "AIzaSyCwz62-vr_JDn2ded-tXPkU1Qlis1SlYT4",
-  authDomain: "time2sell-e2178.firebaseapp.com",
-  databaseURL: "https://time2sell-e2178.firebaseio.com",
-  storageBucket: "time2sell-e2178.appspot.com",
-  messagingSenderId: "911938513703"
 }
-// firebase.initializeApp(config);
-
 
 export default function (state = INITIAL_STATE, action) {
 

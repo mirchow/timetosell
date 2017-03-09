@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import "./App.css";
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import React, { Component } from "react"
+import { connect } from 'react-redux'
+import MuiThemeProvider from "material-ui/styles/MuiThemeProvider"
 import Header from './Header'
 
 const container_style = {
@@ -12,12 +12,18 @@ class App extends Component {
     return (
       <MuiThemeProvider>
         <div style={container_style}>
-            <Header />
-            {this.props.children}
+          <Header router={this.props.router} user={this.props.user} />
+          {this.props.children}
         </div>
       </MuiThemeProvider>
     );
   }
 }
 
-export default App;
+const mapStateToProps = store => {
+  return {
+    user: store.user
+  }
+}
+
+export default connect(mapStateToProps)(App)
