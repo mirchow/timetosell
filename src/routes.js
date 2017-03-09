@@ -2,7 +2,7 @@ import React from 'react'
 import { Route, IndexRoute } from 'react-router'
 import App from './components/App'
 import Stocks from './containers/stocks'
-import Login from './components/Login'
+import Login from './containers/Login'
 
 export default (
   <Route path="/" component={App}>
