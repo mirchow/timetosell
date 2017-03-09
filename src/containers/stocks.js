@@ -41,7 +41,10 @@ Stocks.defaultProps = {};
 
 function mapStateToProps(state) {
   console.log('mapStateToProps state', state.stocks);
-  return {stocks: state.stocks}
+  return {
+    stocks: state.stocks.stocks
+  }
+
 }
 
 function mapDiscpatchToProps(dispatch) {

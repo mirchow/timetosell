@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { firebaseDbRef, firebaseDb } from "./../firebase";
+import { firebaseDB, firebaseDb } from "./../firebase";
 
 
 // TYPES
@@ -11,26 +11,20 @@ const INITIAL_STATE = {
   stocks: []
 };
 
-const Stocks = firebaseDbRef.child('/users/jMa0kEgnUQdxn4rNDTGsW6gB5uG2');
+const Stocks = firebaseDB.ref('/users/jMa0kEgnUQdxn4rNDTGsW6gB5uG2');
 
 
 export default function (state = INITIAL_STATE, action) {
 
-  // console.log(`reducer-> action type: ${action.type} action.payload: ${action.payload} state: ${state}`);
-
   switch (action.type) {
 
     case FETCH_STOCKS:
-      const aaa = {...state,
-        stocks: action.stocks};
-      console.log('reducer-fetchstocks', aaa);
       return {
         ...state,
         stocks: action.stocks
       }
     case SELECT_STOCK:
       if (_.some(state.stocks, {id: action.payload.id})) {
-
         return state;
       }
 
@@ -44,7 +38,9 @@ export default function (state = INITIAL_STATE, action) {
       // });
 
       // return {stocks: [...state.stocks, {id: action.payload.id + '1', name: action.payload.name}]}
-      return {stocks: [...state.stocks, {...action.payload}]};
+      return {
+        stocks: [...state.stocks, {...action.payload}]
+      };
     default:
       return state;
   }
@@ -55,8 +51,6 @@ export default function (state = INITIAL_STATE, action) {
 // ACTIONS
 
 export function selectStock(stock) {
-  console.log(`action selectStock: stock ${stock.id} stock.name ${stock.name}`);
-
   return {
     type: SELECT_STOCK,
     payload: {
@@ -69,7 +63,6 @@ export function selectStock(stock) {
 export function fetchStocks() {
   return dispatch => {
     Stocks.on('value', snapshot => {
-      console.log('snapshot:', snapshot.val().stocks);
       dispatch({
         type: FETCH_STOCKS,
         stocks: snapshot.val().stocks
