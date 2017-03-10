@@ -4,14 +4,14 @@ import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowCol
 const Stock = ({stocks}) => {
   return (
       <Table >
-        <TableHeader displaySelectAll="false" >
-          <TableRow selectable="false">
+        <TableHeader displaySelectAll={false} >
+          <TableRow>
             <TableHeaderColumn>Symbol</TableHeaderColumn>
             <TableHeaderColumn>Last Traded Price</TableHeaderColumn>
             <TableHeaderColumn>Purchased Price</TableHeaderColumn>
           </TableRow>
         </TableHeader>
-        <TableBody displayRowCheckbox="false">
+        <TableBody displayRowCheckbox={false}>
           {renderStocks(stocks)}
         </TableBody>
       </Table>
@@ -21,7 +21,7 @@ const Stock = ({stocks}) => {
 function renderStocks(stocks) {
   return stocks && stocks.map(stock => {
       return (
-        <TableRow key={stock.symbol} selectable="false">
+        <TableRow key={stock.symbol} selectable={false}>
           <TableRowColumn>{stock.symbol}</TableRowColumn>
           <TableRowColumn>{stock.lastTradePriceOnly}</TableRowColumn>
           <TableRowColumn>{stock.purchasePrice}</TableRowColumn>
