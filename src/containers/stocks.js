@@ -1,36 +1,22 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { selectStock, fetchStocks } from "./../reducers/stockReducer";
+import { selectStock, fetchStocks, updateStocks } from "./../reducers/stockReducer";
 import { bindActionCreators } from "redux";
+import Stock from "./../components/Stock";
+
+
 
 class Stocks extends Component {
 
   componentWillMount() {
-    this.props.fetchStocks();
+    this.props.updateStocks();
   }
 
-  renderStocks(stocks) {
-    return stocks && stocks.map(stock => {
-      return (
-        <li
-          onClick={() => this.props.selectStock(stock) }
-          key={stock.symbol}
-          className="list-group-item">
-          {stock.symbol}
-        </li>
-      )
-    });
 
-  }
 
   render() {
     return (
-      <div>
-        <ul className="list-group">
-          {this.renderStocks(this.props.stocks)}
-        </ul>
-
-      </div>
+      <Stock stocks={this.props.stocks}/>
     );
   }
 
@@ -48,7 +34,7 @@ function mapStateToProps(state) {
 }
 
 function mapDiscpatchToProps(dispatch) {
-  return bindActionCreators({selectStock, fetchStocks}, dispatch);
+  return bindActionCreators({selectStock, fetchStocks, updateStocks}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDiscpatchToProps)(Stocks);
