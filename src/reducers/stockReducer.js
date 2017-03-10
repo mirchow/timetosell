@@ -1,10 +1,10 @@
 import _ from "lodash";
 import { firebaseDB } from "./../firebase";
-
+import googleStocks from "google-stocks";
 
 // TYPES
 export const SELECT_STOCK = 'SELECT_STOCK';
-export const FETCH_STOCKS = 'FETCH_STOCKS';
+export const UPDATE_STOCKS = 'UPDATE_STOCKS';
 
 // REDUCERS
 const INITIAL_STATE = {
@@ -18,11 +18,12 @@ export default function (state = INITIAL_STATE, action) {
 
   switch (action.type) {
 
-    case FETCH_STOCKS:
+    case UPDATE_STOCKS:
       return {
         ...state,
         stocks: action.stocks
       }
+
     case SELECT_STOCK:
       if (_.some(state.stocks, {id: action.payload.id})) {
         return state;
@@ -60,15 +61,14 @@ export function selectStock(stock) {
   };
 }
 
-export function fetchStocks() {
+
+export function updateStocks() {
   return dispatch => {
     Stocks.on('value', snapshot => {
       dispatch({
-        type: FETCH_STOCKS,
+        type: UPDATE_STOCKS,
         stocks: snapshot.val().stocks
       });
     });
   };
-
 }
-
