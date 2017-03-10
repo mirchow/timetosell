@@ -1,9 +1,7 @@
 import React, { PropTypes } from "react";
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from "material-ui/Table";
-import googleStocks from "google-stocks";
 
 const Stock = ({stocks}) => {
-
   return (
       <Table >
         <TableHeader displaySelectAll="false" >

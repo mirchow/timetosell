@@ -8,7 +8,6 @@
   "dependencies": {
     "firebase": "^3.7.0",
     "firebaseui": "^1.0.0",
-    "get-stock": "^1.0.3",
     "google-stocks": "^1.0.1",
     "lodash": "^4.17.4",
     "material-ui": "^0.17.0",
