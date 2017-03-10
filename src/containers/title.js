@@ -12,5 +12,4 @@ const title = (props) => {
   );
 };
 
-
 export default title;

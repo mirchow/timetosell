@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { firebaseDB, firebaseDb } from "./../firebase";
+import { firebaseDB } from "./../firebase";
 
 
 // TYPES
