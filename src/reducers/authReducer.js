@@ -1,4 +1,4 @@
-import { firebaseRef, firebaseAuth } from '../firebase'
+import { firebaseRef, firebaseAuth, firebaseDB } from '../firebase'
 
 // ACTION TYPES
 const USER_AUTH = 'user/USER_AUTH'
@@ -44,8 +44,19 @@ export function checkUserAuth () {
     })
   }
 }
+
 export function saveUser (user) {
-  return firebaseRef.child(`users/${user.uid}`)
-    .set(user)
-    .then(() => user)
+  console.log('saveUser',user)
+  return dispatch => {
+    firebaseDB.ref(`users/${user.providerData[0].uid}`)
+       .update({
+         displayName: user.displayName,
+         email: user.email,
+         providerData: user.providerData
+       })
+  }
+
+  // return firebaseRef.child(`users/${user.providerData[0].uid}`)
+  //   .set(user)
+  //   .then(() => user)
 }

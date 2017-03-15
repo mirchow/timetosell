@@ -34,10 +34,10 @@ const mapStateToProps = store => {
   }
 }
 
-function mapDiscpatchToProps(dispatch) {
+function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     checkUserAuth
   }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDiscpatchToProps)(App)
+export default connect(mapStateToProps, mapDispatchToProps)(App)

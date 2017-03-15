@@ -10,7 +10,7 @@ const FIREBASE_CONFIG = {
 }
 
 const FIREBASE_UI_CONFIG = {
-  signInSuccessUrl: '/',
+  signInSuccessUrl: '/auth',
   signInOptions: [
     firebase.auth.GoogleAuthProvider.PROVIDER_ID
   ],

@@ -1,6 +1,5 @@
 import _ from "lodash";
 import { firebaseDB } from "./../firebase";
-import googleStocks from "google-stocks";
 
 // TYPES
 export const SELECT_STOCK = 'SELECT_STOCK';
@@ -11,8 +10,7 @@ const INITIAL_STATE = {
   stocks: []
 };
 
-const Stocks = firebaseDB.ref('/users/jMa0kEgnUQdxn4rNDTGsW6gB5uG2');
-
+// const user = '/users/jMa0kEgnUQdxn4rNDTGsW6gB5uG2';
 
 export default function (state = INITIAL_STATE, action) {
 
@@ -61,14 +59,45 @@ export function selectStock(stock) {
   };
 }
 
+function convertToArray(objGroup) {
+  const newArray = []
+  if (!objGroup) {
+    return newArray
+  }
+  _.forEach(objGroup, (eachObj, index) => {
+    eachObj.id = index
+    newArray.push(eachObj)
+  })
+  return newArray
+}
 
-export function updateStocks() {
+export function updateStocks(userID) {
   return dispatch => {
-    Stocks.on('value', snapshot => {
+    firebaseDB.ref(`users/${userID}`).on('value', snapshot => {
+      const stockArray = convertToArray(snapshot.val().stocks)
       dispatch({
         type: UPDATE_STOCKS,
-        stocks: snapshot.val().stocks
+        stocks: stockArray
       });
     });
   };
 }
+
+export function saveStock(stock, userID) {
+  console.log('saveStock', stock, userID)
+  return dispatch => {
+    firebaseDB.ref(`users/${userID}/stocks`).push().set({
+      symbol: stock.symbol,
+      purchasePrice: stock.purchasePrice
+    });
+  }
+}
+
+export function deleteStock(stockID, userID) {
+  console.log('delete Stock', stockID, userID)
+  return dispatch => {
+    firebaseDB.ref(`users/${userID}/stocks/${stockID}`).remove();
+  }
+}
+
+
