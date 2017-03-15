@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import { AppBar, Avatar, IconButton, IconMenu, MenuItem } from 'material-ui'
+import ActionAccountCircle from 'material-ui/svg-icons/action/account-circle'
+import { Link } from 'react-router'
+
 /**
 * material UI icons
 * google material icons site - https://design.google.com/icons/
@@ -10,8 +13,6 @@ import { AppBar, Avatar, IconButton, IconMenu, MenuItem } from 'material-ui'
 * so the React component class is: [File][CloudDownload]
 * so the import is: material-ui/svg-icons/[file]/[cloud-download]
 */
-import ActionAccountCircle from 'material-ui/svg-icons/action/account-circle'
-import { Link } from 'react-router'
 
 const titleString = 'Time To Sell'
 const avatar_icon_size = 32
@@ -52,6 +53,15 @@ class Header extends Component {
             >
               <MenuItem >
                 <Link to="/login">Login</Link>
+              </MenuItem>
+              <MenuItem >
+                <Link to="/logout">Login</Link>
+              </MenuItem>
+              <MenuItem>
+                <Link to="/">Home</Link>
+              </MenuItem>
+              <MenuItem>
+                <Link to="/addStock">Add Stock</Link>
               </MenuItem>
             </IconMenu>
           }
