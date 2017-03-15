@@ -27,23 +27,12 @@ function renderStocks(stocks, deleteStock) {
       return (
         <TableRow key={stock.symbol} selectable={false}>
           <TableRowColumn>{stock.symbol}</TableRowColumn>
-          <TableRowColumn>{stock.lastTradePriceOnly}</TableRowColumn>
+          <TableRowColumn>{stock.lastPrice}</TableRowColumn>
           <TableRowColumn>{stock.purchasePrice}</TableRowColumn>
           <TableRowColumn>
             <FlatButton label="Delete"
                         secondary={true}
                         onClick={() => deleteStock(stock.id)} /></TableRowColumn>
-          <TableRowColumn>{
-                          googleStocks(['AAPL'])
-            .then(data => {
-              console.log('google-stock', JSON.stringify(data))
-              /* do something with data */
-            })
-            .catch(error => {
-              console.log('google-stock-error:', error);
-              /* error logic */
-            })
-                        }</TableRowColumn>
         </TableRow>
       )
     });
