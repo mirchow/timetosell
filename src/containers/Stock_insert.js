@@ -57,7 +57,7 @@ class StockInsert extends Component {
 
   onSubmit(data) {
     console.log('StockInsert',data)
-    this.props.saveStock(data, this.props.user.providerData[0].uid);
+    this.props.saveStock(data, this.props.user);
   }
 
 

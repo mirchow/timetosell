@@ -71,10 +71,13 @@ function convertToArray(objGroup) {
   return newArray
 }
 
-export function updateStocks(userID) {
+export function updateStocks(user) {
+  console.log('updateStock', user)
   return dispatch => {
-    firebaseDB.ref(`users/${userID}`).on('value', snapshot => {
+    firebaseDB.ref(`users/${user.uid}`).on('value', snapshot => {
+      console.log('stockArray1', snapshot.val())
       const stockArray = convertToArray(snapshot.val().stocks)
+      console.log('stockArray2', stockArray)
       dispatch({
         type: UPDATE_STOCKS,
         stocks: stockArray
@@ -83,20 +86,20 @@ export function updateStocks(userID) {
   };
 }
 
-export function saveStock(stock, userID) {
-  console.log('saveStock', stock, userID)
+export function saveStock(stock, user) {
+  console.log('saveStock', stock, user)
   return dispatch => {
-    firebaseDB.ref(`users/${userID}/stocks`).push().set({
+    firebaseDB.ref(`users/${user.uid}/stocks`).push().set({
       symbol: stock.symbol,
       purchasePrice: stock.purchasePrice
     });
   }
 }
 
-export function deleteStock(stockID, userID) {
-  console.log('delete Stock', stockID, userID)
+export function deleteStock(stockID, user) {
+  console.log('delete Stock', stockID, user)
   return dispatch => {
-    firebaseDB.ref(`users/${userID}/stocks/${stockID}`).remove();
+    firebaseDB.ref(`users/${user.uid}/stocks/${stockID}`).remove();
   }
 }
 
