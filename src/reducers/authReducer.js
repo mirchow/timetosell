@@ -48,7 +48,7 @@ export function checkUserAuth () {
 export function saveUser (user) {
   console.log('saveUser',user)
   return dispatch => {
-    firebaseDB.ref(`users/${user.providerData[0].uid}`)
+    firebaseDB.ref(`users/${user.uid}`)
        .update({
          displayName: user.displayName,
          email: user.email,

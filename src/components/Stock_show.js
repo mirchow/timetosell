@@ -7,15 +7,15 @@ import googleStocks from 'google-stocks';
 const Stock = ({stocks, deleteStock}) => {
   return (
     <Table >
-      <TableHeader displaySelectAll={false}>
-        <TableRow>
+      <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+        <TableRow selectable={false}>
           <TableHeaderColumn>Symbol</TableHeaderColumn>
           <TableHeaderColumn>Last Traded Price</TableHeaderColumn>
           <TableHeaderColumn>Purchased Price</TableHeaderColumn>
           <TableHeaderColumn>Action</TableHeaderColumn>
         </TableRow>
       </TableHeader>
-      <TableBody displayRowCheckbox={false}>
+      <TableBody displayRowCheckbox={false} showRowHover={true}>
         {renderStocks(stocks, deleteStock)}
       </TableBody>
     </Table>
@@ -30,9 +30,8 @@ function renderStocks(stocks, deleteStock) {
           <TableRowColumn>{stock.lastPrice}</TableRowColumn>
           <TableRowColumn>{stock.purchasePrice}</TableRowColumn>
           <TableRowColumn>
-            <FlatButton label="Delete"
-                        secondary={true}
-                        onClick={() => deleteStock(stock.id)} /></TableRowColumn>
+            <FlatButton label="Delete" secondary={true} onClick={() => deleteStock(stock.id)} />
+          </TableRowColumn>
         </TableRow>
       )
     });

@@ -18,16 +18,16 @@ class Stocks extends Component {
   }
 
   componentDidUpdate() {
-    console.log('componentDidUpdate',!this.state.fetching, this.props.user, this.props.user.providerData )
-    if (!this.state.fetching && this.props.user && this.props.user.providerData ) {
-      console.log('componentDidUpdate',!this.state.fetching, this.props.user, this.props.user.providerData, this.props.stocks.length )
+    console.log('componentDidUpdate-OUT',!this.state.fetching, this.props.user !== null)
+    if (!this.state.fetching && this.props.user ) {
+      console.log('componentDidUpdate-IN',!this.state.fetching, this.props.user)
       this.setState({fetching: true})
-      this.props.updateStocks(this.props.user.providerData[0].uid);
+      this.props.updateStocks(this.props.user);
     }
   }
 
   onDeleteClick(stockID, user) {
-    this.props.deleteStock(stockID, this.props.user.providerData[0].uid)
+    this.props.deleteStock(stockID, this.props.user)
   }
 
   render() {
