@@ -22,22 +22,21 @@ const FIELDS = {
 }
 
 const style = {
-  margin: 12,
+  margin: 10,
 };
 
 const renderInputMaterialUI = ({input, label, meta: {touched, error}, ...custom}) =>
   <div>
-    <TextField floatingLabelText={label}
-               errorText={touched && error}
-               {...input}
-               {...custom}
+    <TextField
+      floatingLabelText={label}
+      errorText={touched && error}
+      {...input}
+      {...custom}
     />
   </div>
 
 
 class StockInsert extends Component {
-
-
   constructor(props) {
     super(props);
 
@@ -46,12 +45,10 @@ class StockInsert extends Component {
 
   renderField(fieldConfig) {
     return (
-      <div key={fieldConfig.name}>
-        <Field
-          name={fieldConfig.name}
-          label={fieldConfig.label}
-          component={renderInputMaterialUI}/>
-      </div>
+      <Field
+        name={fieldConfig.name}
+        label={fieldConfig.label}
+        component={renderInputMaterialUI}/>
     )
   }
 
@@ -62,21 +59,32 @@ class StockInsert extends Component {
 
 
   render() {
-    const {handleSubmit, user} = this.props;
+    const {handleSubmit, user } = this.props;
+    const selectedStock = this.props.selectedStock ? this.props.selectedStock : {}
     if (!user) {
       return <div>Not logged id</div>
     }
 
     return (
       <div>
-        <form onSubmit={handleSubmit(this.onSubmit)}>
-          <h3>Add new stock</h3>
+        <h3>Add new stock</h3>
+        <form
+          style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}
+          onSubmit={handleSubmit(this.onSubmit)}>
+          <Field
+            name="symbol"
+            label="Symbol"
+            input={{value: selectedStock.symbol}}
+            component={renderInputMaterialUI}
+          />
+          <Field
+            name="purchasePrice"
+            label="Purchase Price"
+            input={{value: selectedStock.purchasePrice}}
+            component={renderInputMaterialUI}
+          />
 
-          {_.map(FIELDS, this.renderField)}
-
-          <div>
             <RaisedButton label="Submit" primary={true} style={style} type="submit"/>
-          </div>
         </form>
       </div>
     );
@@ -102,15 +110,16 @@ StockInsert.defaultProps = {};
 
 const mapStateToProps = store => {
   return {
-    user: store.auth.user
+    user: store.auth.user,
+    selectedStock: store.stocks.selectedStock
   }
 }
 
 // kind of hack how to connect redux-form and redux(connect) - you have to write it on 2 lines
 // 1) do reduxForm and 2nd connect
 StockInsert = reduxForm({
-  form: 'StockInsertForm'
-  , validate
+  form: 'StockInsertForm',
+  validate
 })(StockInsert);
 
 StockInsert = connect(mapStateToProps, {saveStock})(StockInsert);

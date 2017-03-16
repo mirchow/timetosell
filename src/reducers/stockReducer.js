@@ -2,62 +2,53 @@ import _ from "lodash";
 import { firebaseDB } from "./../firebase";
 
 // TYPES
-export const SELECT_STOCK = 'SELECT_STOCK';
-export const UPDATE_STOCKS = 'UPDATE_STOCKS';
+const LOAD_STOCKS = 'UPDATE_STOCKS';
+const SELECT_STOCK = 'SELECT_STOCK'
 
 // REDUCERS
 const INITIAL_STATE = {
-  stocks: []
+  stocks: [],
+  loaded: false,
+  selectedStock: {}
 };
 
 // const user = '/users/jMa0kEgnUQdxn4rNDTGsW6gB5uG2';
 
 export default function (state = INITIAL_STATE, action) {
-
   switch (action.type) {
-
-    case UPDATE_STOCKS:
+    case LOAD_STOCKS:
       return {
         ...state,
+        loaded: true,
         stocks: action.stocks
       }
-
+    case SELECT_STOCK:
+      return {
+        ...state,
+        selectedStock: action.selectedStock
+      }
     case SELECT_STOCK:
       if (_.some(state.stocks, {id: action.payload.id})) {
         return state;
       }
-
-      // return Object.assign({}, state, {
-      //   stocks: [...state.stocks,
-      //     {
-      //       id: action.payload.id + '1',
-      //       name: action.payload.name
-      //     }
-      //   ]
-      // });
-
-      // return {stocks: [...state.stocks, {id: action.payload.id + '1', name: action.payload.name}]}
       return {
         stocks: [...state.stocks, {...action.payload}]
       };
     default:
       return state;
   }
-
-
 }
 
 // ACTIONS
-
-export function selectStock(stock) {
-  return {
-    type: SELECT_STOCK,
-    payload: {
-      id: stock.id + '1',
-      name: stock.name
-    }
-  };
-}
+// export function selectStock(stock) {
+//   return {
+//     type: SELECT_STOCK,
+//     payload: {
+//       id: stock.id + '1',
+//       name: stock.name
+//     }
+//   };
+// }
 
 function convertToArray(objGroup) {
   const newArray = []
@@ -71,7 +62,7 @@ function convertToArray(objGroup) {
   return newArray
 }
 
-export function updateStocks(user) {
+export function loadStocks(user) {
   console.log('updateStock', user)
   return dispatch => {
     firebaseDB.ref(`users/${user.uid}`).on('value', snapshot => {
@@ -79,11 +70,18 @@ export function updateStocks(user) {
       const stockArray = convertToArray(snapshot.val().stocks)
       console.log('stockArray2', stockArray)
       dispatch({
-        type: UPDATE_STOCKS,
+        type: LOAD_STOCKS,
         stocks: stockArray
       });
     });
   };
+}
+
+export function selectStock(stock) {
+  return {
+    type: SELECT_STOCK,
+    selectedStock: stock
+  }
 }
 
 export function saveStock(stock, user) {
