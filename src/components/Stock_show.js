@@ -4,7 +4,7 @@ import FlatButton from 'material-ui/FlatButton';
 import googleStocks from 'google-stocks';
 
 
-const Stock = ({stocks, deleteStock}) => {
+const Stock = ({stocks, editStock, deleteStock}) => {
   return (
     <Table >
       <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
@@ -16,13 +16,13 @@ const Stock = ({stocks, deleteStock}) => {
         </TableRow>
       </TableHeader>
       <TableBody displayRowCheckbox={false} showRowHover={true}>
-        {renderStocks(stocks, deleteStock)}
+        {renderStocks(stocks, editStock, deleteStock)}
       </TableBody>
     </Table>
   );
 };
 
-function renderStocks(stocks, deleteStock) {
+function renderStocks(stocks, editStock, deleteStock) {
   return stocks && stocks.map(stock => {
       return (
         <TableRow key={stock.symbol} selectable={false}>
@@ -30,6 +30,7 @@ function renderStocks(stocks, deleteStock) {
           <TableRowColumn>{stock.lastPrice}</TableRowColumn>
           <TableRowColumn>{stock.purchasePrice}</TableRowColumn>
           <TableRowColumn>
+            <FlatButton label="Edit" secondary={true} onClick={() => editStock(stock)} />
             <FlatButton label="Delete" secondary={true} onClick={() => deleteStock(stock.id)} />
           </TableRowColumn>
         </TableRow>

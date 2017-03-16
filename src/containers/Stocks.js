@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { selectStock, updateStocks, deleteStock } from "./../reducers/stockReducer";
+import { selectStock, loadStocks, deleteStock } from "./../reducers/stockReducer";
 import { bindActionCreators } from "redux";
 import Stock from "./../components/Stock_show";
+import StockEdit from './Stock_insert'
 
 
 class Stocks extends Component {
-
 
   constructor(props) {
     super(props)
@@ -15,20 +15,25 @@ class Stocks extends Component {
       fetching: false
     }
     this.onDeleteClick = this.onDeleteClick.bind(this)
+    this.onEditStock = this.onEditStock.bind(this)
   }
 
   componentDidUpdate() {
-    console.log('componentDidUpdate-OUT',!this.state.fetching, this.props.user !== null)
     if (!this.state.fetching && this.props.user ) {
-      console.log('componentDidUpdate-IN',!this.state.fetching, this.props.user)
       this.setState({fetching: true})
-      this.props.updateStocks(this.props.user);
+      this.props.loadStocks(this.props.user);
     }
   }
 
-  onDeleteClick(stockID, user) {
-    this.props.deleteStock(stockID, this.props.user)
+  onDeleteClick(stockId) {
+    this.props.deleteStock(stockId, this.props.user)
   }
+
+  onEditStock(stock) {
+    console.log('selectStock', stock)
+    this.props.selectStock(stock)
+  }
+
 
   render() {
     const authenticated = this.props.user && this.props.user.providerData
@@ -36,7 +41,12 @@ class Stocks extends Component {
     if (authenticated) {
       result =
         <div>
-          <Stock stocks={this.props.stocks} user={this.props.user} deleteStock={this.onDeleteClick} />
+          <Stock
+            stocks={this.props.stocks}
+            user={this.props.user}
+            editStock={this.onEditStock}
+            deleteStock={this.onDeleteClick} />
+          <StockEdit />
         </div>
     } else {
       result = <div>You have to login first</div>
@@ -58,7 +68,7 @@ function mapStateToProps(state) {
 }
 
 function mapDiscpatchToProps(dispatch) {
-  return bindActionCreators({selectStock, updateStocks, deleteStock}, dispatch);
+  return bindActionCreators({selectStock, loadStocks, deleteStock}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDiscpatchToProps)(Stocks);
