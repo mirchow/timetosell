@@ -1,17 +1,22 @@
 import React, { PropTypes } from "react";
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from "material-ui/Table";
-import FlatButton from 'material-ui/FlatButton';
-import googleStocks from 'google-stocks';
-
+import IconDelete from "material-ui/svg-icons/action/delete";
+import moment from "moment";
 
 const Stock = ({stocks, editStock, deleteStock}) => {
+
   return (
     <Table >
       <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
         <TableRow selectable={false}>
           <TableHeaderColumn>Symbol</TableHeaderColumn>
-          <TableHeaderColumn>Last Traded Price</TableHeaderColumn>
-          <TableHeaderColumn>Purchased Price</TableHeaderColumn>
+          <TableHeaderColumn>Purchase Price</TableHeaderColumn>
+          <TableHeaderColumn>Last Price</TableHeaderColumn>
+          <TableHeaderColumn>Gain</TableHeaderColumn>
+          <TableHeaderColumn>Highest Price</TableHeaderColumn>
+          <TableHeaderColumn>Since Highest</TableHeaderColumn>
+          <TableHeaderColumn>Treshold</TableHeaderColumn>
+          <TableHeaderColumn>Updated</TableHeaderColumn>
           <TableHeaderColumn>Action</TableHeaderColumn>
         </TableRow>
       </TableHeader>
@@ -25,13 +30,17 @@ const Stock = ({stocks, editStock, deleteStock}) => {
 function renderStocks(stocks, editStock, deleteStock) {
   return stocks && stocks.map(stock => {
       return (
-        <TableRow key={stock.symbol} selectable={false}>
+        <TableRow key={stock.symbol} selectable={false} style={{}}>
           <TableRowColumn>{stock.symbol}</TableRowColumn>
-          <TableRowColumn>{stock.lastPrice}</TableRowColumn>
           <TableRowColumn>{stock.purchasePrice}</TableRowColumn>
+          <TableRowColumn>{stock.lastPrice}</TableRowColumn>
+          <TableRowColumn>{stock.gain}</TableRowColumn>
+          <TableRowColumn>{stock.highestPrice}</TableRowColumn>
+          <TableRowColumn>{stock.currentTreshold} %</TableRowColumn>
+          <TableRowColumn>20%</TableRowColumn>
+          <TableRowColumn>{moment(stock.lastPriceTimeStamp).format("H:mm:ss")}</TableRowColumn>
           <TableRowColumn>
-            <FlatButton label="Edit" secondary={true} onClick={() => editStock(stock)} />
-            <FlatButton label="Delete" secondary={true} onClick={() => deleteStock(stock.id)} />
+            <IconDelete onClick={() => deleteStock(stock.id)}/>
           </TableRowColumn>
         </TableRow>
       )

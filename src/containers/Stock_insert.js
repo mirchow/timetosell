@@ -1,10 +1,10 @@
-import _ from "lodash";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Form, Field, reduxForm } from "redux-form";
+import { Field, reduxForm } from "redux-form";
 import TextField from "material-ui/TextField";
-import RaisedButton from "material-ui/RaisedButton";
 import { saveStock } from "../reducers/stockReducer";
+import FloatingActionButton from "material-ui/FloatingActionButton";
+import Save from "material-ui/svg-icons/content/save";
 
 const FIELDS = {
   symbol: {
@@ -21,10 +21,6 @@ const FIELDS = {
   }
 }
 
-const style = {
-  margin: 10,
-};
-
 const renderInputMaterialUI = ({input, label, meta: {touched, error}, ...custom}) =>
   <div>
     <TextField
@@ -35,11 +31,16 @@ const renderInputMaterialUI = ({input, label, meta: {touched, error}, ...custom}
     />
   </div>
 
+const buttonStyleContainers = {
+  display: 'flex',
+  flexFlow: 'row nowrap',
+  justifyContent: 'flex-end',
+}
 
 class StockInsert extends Component {
+
   constructor(props) {
     super(props);
-
     this.onSubmit = this.onSubmit.bind(this);
   }
 
@@ -53,38 +54,42 @@ class StockInsert extends Component {
   }
 
   onSubmit(data) {
-    console.log('StockInsert',data)
+    console.log('StockInsert', JSON.stringify(data))
+
+    data.lastPriceTimeStamp = '-'
+    data.lastPrice = 1
+    data.highestPrice = 1
+    data.currentTreshold = 0
+    data.gain = 1
     this.props.saveStock(data, this.props.user);
   }
 
 
   render() {
-    const {handleSubmit, user } = this.props;
+    const {handleSubmit, user} = this.props;
     const selectedStock = this.props.selectedStock ? this.props.selectedStock : {}
     if (!user) {
       return <div>Not logged id</div>
     }
 
     return (
-      <div>
-        <h3>Add new stock</h3>
+      <div style={buttonStyleContainers} >
+        {/*<h3>Add new stock</h3>*/}
         <form
-          style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}
           onSubmit={handleSubmit(this.onSubmit)}>
           <Field
             name="symbol"
             label="Symbol"
-            input={{value: selectedStock.symbol}}
             component={renderInputMaterialUI}
           />
           <Field
             name="purchasePrice"
             label="Purchase Price"
-            input={{value: selectedStock.purchasePrice}}
             component={renderInputMaterialUI}
           />
-
-            <RaisedButton label="Submit" primary={true} style={style} type="submit"/>
+          <FloatingActionButton type="submit">
+            <Save />
+          </FloatingActionButton>
         </form>
       </div>
     );
@@ -94,7 +99,8 @@ class StockInsert extends Component {
 
 function validate(values) {
   const errors = {}
-  const requiredFields = ['symbol', 'shares', 'purchasePrice', 'submit']
+  // const requiredFields = ['symbol', 'shares', 'purchasePrice', 'submit']
+  const requiredFields = ['symbol', 'purchasePrice', 'submit']
   requiredFields.forEach(field => {
     if (!values[field]) {
       errors[field] = 'Required'
@@ -118,12 +124,10 @@ const mapStateToProps = store => {
 // kind of hack how to connect redux-form and redux(connect) - you have to write it on 2 lines
 // 1) do reduxForm and 2nd connect
 StockInsert = reduxForm({
-  form: 'StockInsertForm',
-  validate
-})(StockInsert);
+  form: 'StockInsertForm'
+  ,validate
+  })(StockInsert);
 
 StockInsert = connect(mapStateToProps, {saveStock})(StockInsert);
 
 export default StockInsert;
-
-
