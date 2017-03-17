@@ -1,27 +1,40 @@
-import React, { Component } from "react";
+import React, { Component, PropTypes } from "react";
 import { connect } from "react-redux";
-import { selectStock, loadStocks, deleteStock } from "./../reducers/stockReducer";
+import { selectStock, loadStocks, deleteStock, clickShowAddStock } from "./../reducers/stockReducer";
 import { bindActionCreators } from "redux";
 import Stock from "./../components/Stock_show";
-import StockEdit from './Stock_insert'
+import FloatingActionButton from "material-ui/FloatingActionButton";
+import ContentAdd from "material-ui/svg-icons/content/add";
+import StockAdd from "./Stock_insert";
+
+const buttonStyle = {
+  display: 'flex',
+  flexFlow: 'row wrap',
+  justifyContent: 'flex-end',
+}
 
 
 class Stocks extends Component {
 
+  static propTypes = {
+    showAddStock: PropTypes.bool.required
+  }
+
+
   constructor(props) {
     super(props)
-
-    this.state = {
-      fetching: false
-    }
     this.onDeleteClick = this.onDeleteClick.bind(this)
     this.onEditStock = this.onEditStock.bind(this)
   }
 
+  state = {
+    fetching: false,
+  }
+
   componentDidUpdate() {
-    if (!this.state.fetching && this.props.user ) {
-      this.setState({fetching: true})
+    if (!this.state.fetching && this.props.user) {
       this.props.loadStocks(this.props.user);
+      this.setState({fetching: true})
     }
   }
 
@@ -30,23 +43,35 @@ class Stocks extends Component {
   }
 
   onEditStock(stock) {
-    console.log('selectStock', stock)
+    console.log('onEditStock', stock)
     this.props.selectStock(stock)
   }
 
 
   render() {
-    const authenticated = this.props.user && this.props.user.providerData
+    const {user} = this.props;
+    const authenticated = user && user.providerData
     let result = ''
     if (authenticated) {
       result =
-        <div>
+        <div style={buttonStyle}>
           <Stock
             stocks={this.props.stocks}
             user={this.props.user}
             editStock={this.onEditStock}
-            deleteStock={this.onDeleteClick} />
-          <StockEdit />
+            deleteStock={this.onDeleteClick}/>
+
+          {!this.props.showAddStock ?
+            <FloatingActionButton
+              onClick={ () => {
+                this.props.clickShowAddStock(true) }} >
+              <ContentAdd />
+            </FloatingActionButton>
+            : ''
+          }
+
+          {this.props.showAddStock ? <StockAdd /> : ''}
+
         </div>
     } else {
       result = <div>You have to login first</div>
@@ -56,19 +81,24 @@ class Stocks extends Component {
 
 }
 
-Stocks.propTypes = {};
 Stocks.defaultProps = {};
 
 function mapStateToProps(state) {
   return {
     stocks: state.stocks.stocks,
-    user: state.auth.user
+    user: state.auth.user,
+    showAddStock: state.stocks.showAddStock
   }
 
 }
 
 function mapDiscpatchToProps(dispatch) {
-  return bindActionCreators({selectStock, loadStocks, deleteStock}, dispatch);
+  return bindActionCreators({
+    selectStock,
+    loadStocks,
+    deleteStock,
+    clickShowAddStock
+  }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDiscpatchToProps)(Stocks);

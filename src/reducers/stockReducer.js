@@ -2,14 +2,16 @@ import _ from "lodash";
 import { firebaseDB } from "./../firebase";
 
 // TYPES
-const LOAD_STOCKS = 'UPDATE_STOCKS';
+const LOAD_STOCKS = 'LOAD_STOCKS'
 const SELECT_STOCK = 'SELECT_STOCK'
+const SHOW_ADD_STOCK = 'SHOW_ADD_STOCK'
 
 // REDUCERS
 const INITIAL_STATE = {
   stocks: [],
   loaded: false,
-  selectedStock: {}
+  selectedStock: {},
+  showAddStock: false
 };
 
 // const user = '/users/jMa0kEgnUQdxn4rNDTGsW6gB5uG2';
@@ -34,6 +36,11 @@ export default function (state = INITIAL_STATE, action) {
       return {
         stocks: [...state.stocks, {...action.payload}]
       };
+    case SHOW_ADD_STOCK:
+      return {
+        ...state,
+        showAddStock: action.showAddStock
+      }
     default:
       return state;
   }
@@ -63,7 +70,7 @@ function convertToArray(objGroup) {
 }
 
 export function loadStocks(user) {
-  console.log('updateStock', user)
+  console.log('loadStocks', user)
   return dispatch => {
     firebaseDB.ref(`users/${user.uid}`).on('value', snapshot => {
       console.log('stockArray1', snapshot.val())
@@ -84,13 +91,30 @@ export function selectStock(stock) {
   }
 }
 
+export function clickShowAddStock(value) {
+  return {
+    type: SHOW_ADD_STOCK,
+    showAddStock: value
+  }
+}
+
 export function saveStock(stock, user) {
   console.log('saveStock', stock, user)
   return dispatch => {
     firebaseDB.ref(`users/${user.uid}/stocks`).push().set({
-      symbol: stock.symbol,
-      purchasePrice: stock.purchasePrice
+      symbol: stock.symbol.toUpperCase(),
+      purchasePrice: stock.purchasePrice,
+      highestPrice: stock.purchasePrice,
+      lastPrice: stock.lastPrice,
+      lastPriceTimeStamp: stock.lastPriceTimeStamp
     });
+
+    dispatch({
+      type: SHOW_ADD_STOCK,
+      showAddStock: false
+    })
+
+    fetch("https://us-central1-time2sell-e2178.cloudfunctions.net/updateStocks")
   }
 }
 
