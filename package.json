@@ -3,9 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
+    "enzyme": "^2.7.1",
+    "eslint": "^3.18.0",
+    "eslint-config-standard": "^7.1.0",
+    "react-addons-test-utils": "^15.4.2",
     "react-scripts": "^0.9.4"
   },
   "dependencies": {
+
     "firebase": "^3.7.0",
     "firebaseui": "^1.0.0",
     "google-stocks": "^1.0.1",

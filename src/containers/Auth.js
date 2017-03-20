@@ -1,27 +1,17 @@
-import React, { Component, PropTypes } from "react";
-import { firebaseRef } from "../firebase";
-import { checkUserAuth, saveUser } from "../reducers/authReducer";
+import React, { Component } from "react";
+import { checkUserAuth, logUserPresence, saveUser } from "../reducers/authReducer";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { push } from 'react-router-redux'
-import { Link } from 'react-router'
+import { push } from "react-router-redux";
+import { Link } from "react-router";
 
 class Auth extends Component {
 
-  constructor(props) {
-    super(props)
-
-    // this.registerUser = this.registerUser.bind(this)
-  }
-
-
-
   componentDidUpdate() {
     this.props.saveUser(this.props.user)
-    console.log('auth push')
+    this.props.logUserPresence(this.props.user)
     this.props.push('/')
   }
-
 
   render() {
     if (!this.props.user) {
@@ -48,6 +38,7 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     checkUserAuth,
     saveUser,
+    logUserPresence,
     push
   }, dispatch);
 }
