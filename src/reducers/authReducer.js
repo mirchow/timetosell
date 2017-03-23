@@ -52,7 +52,6 @@ export function checkUserAuth() {
 }
 
 export function saveUser(user) {
-  console.log('saveUser', user);
   return (dispatch) => {
     firebaseDB.ref(`users/${user.uid}`)
       .update({
@@ -69,7 +68,6 @@ export function saveUser(user) {
 }
 
 export function logout(user) {
-  console.log('logout');
   return (dispatch) => {
     // this is fix for logout functions as it doesn't unregister user from firebase (closing tab, browser, does it automatically)
     firebaseDB.ref(`users/${user.uid}/connections`).remove();

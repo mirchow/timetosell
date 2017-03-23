@@ -1,11 +1,12 @@
-import React, { Component, PropTypes } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import { selectStock, loadStocks, deleteStock, clickShowAddStock } from "./../reducers/stockReducer";
 import { bindActionCreators } from "redux";
-import Stock from "./../components/Stock_show";
+import Stock from "../components/StockTable";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import ContentAdd from "material-ui/svg-icons/content/add";
-import StockAdd from "./Stock_insert";
+import StockAdd from "./EditStock";
+import { Link } from 'react-router'
 
 const buttonStyle = {
   display: 'flex',
@@ -27,18 +28,14 @@ class Stocks extends Component {
   }
 
   componentWillMount() {
-    console.log('App1', this.state.fetching, this.props.user)
     if (!this.state.fetching && this.props.user) {
-      console.log('App11')
       this.props.loadStocks(this.props.user);
       this.setState({fetching: true})
     }
   }
 
   componentDidUpdate() {
-    console.log('App2', this.state.fetching)
     if (!this.state.fetching && this.props.user) {
-      console.log('App22')
       this.props.loadStocks(this.props.user);
       this.setState({fetching: true})
     }
@@ -49,7 +46,7 @@ class Stocks extends Component {
   }
 
   onEditStock(stock) {
-    console.log('onEditStock', stock)
+    console.log('editStock', stock);
     this.props.selectStock(stock)
   }
 
@@ -60,13 +57,15 @@ class Stocks extends Component {
     let result = ''
     if (authenticated) {
       result =
+        <div>
         <div style={buttonStyle}>
           <Stock
             stocks={this.props.stocks}
             user={this.props.user}
             editStock={this.onEditStock}
             deleteStock={this.onDeleteClick}/>
-
+        </div>
+        <div style={buttonStyle}>
           {!this.props.showAddStock ?
             <FloatingActionButton
               onClick={ () => {
@@ -75,12 +74,14 @@ class Stocks extends Component {
             </FloatingActionButton>
             : ''
           }
-
+        </div>
           {this.props.showAddStock ? <StockAdd /> : ''}
-
         </div>
     } else {
-      result = <div>You have to login first</div>
+      result =
+        <div style={{margin: 20}}>
+          You have to <Link to="/login">Login</Link> first
+        </div>
     }
     return result
   }

@@ -4,7 +4,7 @@ import App from './containers/App'
 import Stocks from './containers/Stocks'
 import Login from './containers/Login'
 import Logout from './containers/Logout'
-import InsertStock from './containers/Stock_insert'
+import InsertStock from './containers/EditStock'
 import Auth from './containers/Auth'
 
 export default (

@@ -6,21 +6,6 @@ import { saveStock } from "../reducers/stockReducer";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import Save from "material-ui/svg-icons/content/save";
 
-const FIELDS = {
-  symbol: {
-    name: 'symbol',
-    label: 'Symbol'
-  },
-  shares: {
-    name: 'shares',
-    label: 'Amount of shares'
-  },
-  purchasePrice: {
-    name: 'purchasePrice',
-    label: 'Purchase price'
-  }
-}
-
 const renderInputMaterialUI = ({input, label, meta: {touched, error}, ...custom}) =>
   <div>
     <TextField
@@ -33,7 +18,7 @@ const renderInputMaterialUI = ({input, label, meta: {touched, error}, ...custom}
 
 const buttonStyleContainers = {
   display: 'flex',
-  flexFlow: 'row nowrap',
+  flexFlow: 'column',
   justifyContent: 'flex-end',
 }
 
@@ -54,8 +39,6 @@ class StockInsert extends Component {
   }
 
   onSubmit(data) {
-    console.log('StockInsert', JSON.stringify(data))
-
     data.lastPriceTimeStamp = '-'
     data.lastPrice = 1
     data.highestPrice = 1
@@ -67,7 +50,6 @@ class StockInsert extends Component {
 
   render() {
     const {handleSubmit, user} = this.props;
-    const selectedStock = this.props.selectedStock ? this.props.selectedStock : {}
     if (!user) {
       return <div>Not logged id</div>
     }
@@ -86,6 +68,12 @@ class StockInsert extends Component {
             name="purchasePrice"
             label="Purchase Price"
             component={renderInputMaterialUI}
+          />
+          <Field
+            name="threshold"
+            label="Threshold"
+            component={renderInputMaterialUI}
+            defaultValue={4}
           />
           <FloatingActionButton type="submit">
             <Save />
