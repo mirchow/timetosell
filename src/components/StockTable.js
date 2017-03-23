@@ -22,17 +22,17 @@ const numberStyleRed = {
 
 const Stock = ({stocks, editStock, deleteStock}) => {
   return (
-    <Table style={{margin: 10, align: 'center'}}>
+    <Table style={{margin: 10, align: 'left'}}>
       <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
         <TableRow selectable={false}>
-          <TableHeaderColumn>Symbol</TableHeaderColumn>
-          <TableHeaderColumn style={numberStyle}>Purchase<br/>Price</TableHeaderColumn>
+          <TableHeaderColumn style={numberStyle}>Symbol</TableHeaderColumn>
+          <TableHeaderColumn className="hidden-xs" style={numberStyle}>Purchase<br/>Price</TableHeaderColumn>
           <TableHeaderColumn style={numberStyle}>Last<br/>Price</TableHeaderColumn>
           <TableHeaderColumn style={numberStyle}>Gain</TableHeaderColumn>
-          <TableHeaderColumn style={numberStyle}>Highest<br/>Price</TableHeaderColumn>
+          <TableHeaderColumn className="hidden-xs" style={numberStyle}>Highest<br/>Price</TableHeaderColumn>
           <TableHeaderColumn style={numberStyle}>Since<br/>Highest</TableHeaderColumn>
-          <TableHeaderColumn style={numberStyle}>Treshold</TableHeaderColumn>
-          <TableHeaderColumn style={numberStyle}>Updated</TableHeaderColumn>
+          <TableHeaderColumn className="hidden-xs" style={numberStyle}>Treshold</TableHeaderColumn>
+          <TableHeaderColumn className="hidden-xs" style={numberStyle}>Updated</TableHeaderColumn>
           <TableHeaderColumn style={numberStyle}>Action</TableHeaderColumn>
         </TableRow>
       </TableHeader>
@@ -57,14 +57,14 @@ function renderStocks(stocks, editStock, deleteStock) {
 
       return (
         <TableRow key={stock.symbol} selectable={false} style={{}}>
-          <TableRowColumn>{stock.symbol}</TableRowColumn>
-          <TableRowColumn style={numberStyle}>{toFixed(stock.purchasePrice, 2)}</TableRowColumn>
+          <TableRowColumn style={numberStyle}>{stock.symbol}</TableRowColumn>
+          <TableRowColumn className="hidden-xs" style={numberStyle}>{toFixed(stock.purchasePrice, 2)}</TableRowColumn>
           <TableRowColumn style={numberStyle}>{stock.lastPrice}</TableRowColumn>
           <TableRowColumn style={gainColorStyle}>{stock.gain}</TableRowColumn>
-          <TableRowColumn style={numberStyle}>{stock.highestPrice}</TableRowColumn>
+          <TableRowColumn className="hidden-xs" style={numberStyle}>{stock.highestPrice}</TableRowColumn>
           <TableRowColumn style={thresholdStyle}>{stock.currentTreshold} %</TableRowColumn>
-          <TableRowColumn style={numberStyle}>{stock.threshold} %</TableRowColumn>
-          <TableRowColumn style={numberStyle}>{moment(stock.lastPriceTimeStamp).format("H:mm:ss")}</TableRowColumn>
+          <TableRowColumn className="hidden-xs" style={numberStyle}>{stock.threshold} %</TableRowColumn>
+          <TableRowColumn className="hidden-xs" style={numberStyle}>{moment(stock.lastPriceTimeStamp).format("H:mm:ss")}</TableRowColumn>
           <TableRowColumn>
             <IconEdit onClick={() => editStock(stock)} />&nbsp;&nbsp;
             <IconDelete onClick={() => deleteStock(stock.id)} />
