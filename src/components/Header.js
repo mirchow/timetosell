@@ -23,11 +23,6 @@ const custom_padding = {
 
 class Header extends Component {
 
-  loginAction() {
-    // <Link to="/login">Login</Link>
-    console.log('loginAction')
-  }
-
   render() {
     const { router, user } = this.props
     console.log('router', router)
@@ -52,10 +47,7 @@ class Header extends Component {
               }
             >
               <MenuItem >
-                <Link to="/login">Login</Link>
-              </MenuItem>
-              <MenuItem >
-                <Link to="/logout">Login</Link>
+                <Link to="/logout" >Logout</Link>
               </MenuItem>
               <MenuItem>
                 <Link to="/">Home</Link>

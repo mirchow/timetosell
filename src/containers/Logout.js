@@ -1,12 +1,15 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component, PropTypes } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import { logout } from "../reducers/authReducer";
+import { push } from "react-router-redux";
 
 
 class Logout extends Component {
 
-  componentWillMount() {
-    this.setState(this.state.auth = null)
+  componentDidMount() {
+    this.props.logout(this.props.user)
+    this.props.push('/')
   }
 
   render() {
@@ -21,9 +24,15 @@ Logout.defaultProps = {};
 
 function mapStateToProps(state) {
   return {
-    stocks: state.stocks.stocks,
     user: state.auth.user
   }
 }
 
-export default connect(mapStateToProps)(Logout);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    logout,
+    push
+  }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Logout);

@@ -1,16 +1,17 @@
-import { applyMiddleware, createStore, compose } from 'redux'
-import thunk from 'redux-thunk'
+import { applyMiddleware, compose, createStore } from "redux";
+import thunk from "redux-thunk";
+import { routerMiddleware } from "react-router-redux";
+import { browserHistory } from "react-router";
+import reducers from "./reducers";
 
-import reducers from './reducers'
-
-const middleware = applyMiddleware(thunk)
+const router = routerMiddleware(browserHistory);
 
 const store = createStore(
   reducers,
-  compose (
-    middleware,
-    window.devToolsExtension ? window.devToolsExtension() : f => f
-  )
-)
+  compose(
+    applyMiddleware(thunk, router),
+    window.devToolsExtension ? window.devToolsExtension() : f => f,
+  ),
+);
 
-export default store
+export default store;

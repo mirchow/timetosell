@@ -16,11 +16,6 @@ const buttonStyle = {
 
 class Stocks extends Component {
 
-  static propTypes = {
-    showAddStock: PropTypes.bool.required
-  }
-
-
   constructor(props) {
     super(props)
     this.onDeleteClick = this.onDeleteClick.bind(this)
@@ -31,8 +26,19 @@ class Stocks extends Component {
     fetching: false,
   }
 
-  componentDidUpdate() {
+  componentWillMount() {
+    console.log('App1', this.state.fetching, this.props.user)
     if (!this.state.fetching && this.props.user) {
+      console.log('App11')
+      this.props.loadStocks(this.props.user);
+      this.setState({fetching: true})
+    }
+  }
+
+  componentDidUpdate() {
+    console.log('App2', this.state.fetching)
+    if (!this.state.fetching && this.props.user) {
+      console.log('App22')
       this.props.loadStocks(this.props.user);
       this.setState({fetching: true})
     }
