@@ -75,7 +75,7 @@ function renderStocks (stocks, editStock, deleteStock) {
 }
 
 Stock.propTypes = {
-  stocks: PropTypes.func.isRequired,
+  stocks: React.PropTypes.array,
   editStock: PropTypes.func.isRequired,
   deleteStock: PropTypes.func.isRequired
 }
