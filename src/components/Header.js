@@ -45,13 +45,13 @@ class Header extends Component {
               }
             >
               <MenuItem >
-                <Link to="/logout" >Logout</Link>
+                <Link to='/logout' >Logout</Link>
               </MenuItem>
               <MenuItem>
-                <Link to="/">Home</Link>
+                <Link to='/'>Home</Link>
               </MenuItem>
               <MenuItem>
-                <Link to="/addStock">Add Stock</Link>
+                <Link to='/addStock'>Add Stock</Link>
               </MenuItem>
             </IconMenu>
           }
@@ -76,7 +76,7 @@ class Header extends Component {
               }
             >
               <MenuItem>
-                <Link to="/login">Login</Link>
+                <Link to='/login'>Login</Link>
               </MenuItem>
             </IconMenu>
           }
