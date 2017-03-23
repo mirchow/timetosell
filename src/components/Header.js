@@ -24,9 +24,7 @@ const custom_padding = {
 class Header extends Component {
 
   render() {
-    const { router, user } = this.props
-    console.log('router', router)
-    console.log('user', user)
+    const { user } = this.props
     const authenticated = user && user.providerData
     let appbar = ''
     if (authenticated) {
@@ -64,18 +62,23 @@ class Header extends Component {
         <AppBar
           title={titleString}
           iconElementRight={
-            <IconButton
-              style={custom_padding}
+            <IconMenu
+              iconButtonElement={
+                <IconButton
+                  style={custom_padding}
+                >
+                  <Avatar
+                    size={avatar_icon_size}
+                    onTouchTap={this.loginAction}
+                    icon={<ActionAccountCircle />}
+                  />
+                </IconButton>
+              }
             >
-              <Avatar
-                size={avatar_icon_size}
-                onTouchTap={this.loginAction}
-                icon={<ActionAccountCircle />}
-              />
-            </IconButton>
-          }
-          iconElementLeft={
-            <Link to="/login">Login</Link>
+              <MenuItem>
+                <Link to="/login">Login</Link>
+              </MenuItem>
+            </IconMenu>
           }
         />
     }

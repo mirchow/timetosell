@@ -29,13 +29,13 @@ export default function (state = INITIAL_STATE, action) {
         ...state,
         selectedStock: action.selectedStock
       }
-    case SELECT_STOCK:
-      if (_.some(state.stocks, {id: action.payload.id})) {
-        return state;
-      }
-      return {
-        stocks: [...state.stocks, {...action.payload}]
-      };
+    // case SELECT_STOCK:
+    //   if (_.some(state.stocks, {id: action.payload.id})) {
+    //     return state;
+    //   }
+    //   return {
+    //     stocks: [...state.stocks, {...action.payload}]
+    //   };
     case SHOW_ADD_STOCK:
       return {
         ...state,
@@ -70,12 +70,9 @@ function convertToArray(objGroup) {
 }
 
 export function loadStocks(user) {
-  console.log('loadStocks', user)
   return dispatch => {
     firebaseDB.ref(`users/${user.uid}`).on('value', snapshot => {
-      console.log('stockArray1', snapshot.val())
       const stockArray = convertToArray(snapshot.val().stocks)
-      console.log('stockArray2', stockArray)
       dispatch({
         type: LOAD_STOCKS,
         stocks: stockArray
@@ -99,7 +96,6 @@ export function clickShowAddStock(value) {
 }
 
 export function saveStock(stock, user) {
-  console.log('saveStock', stock, user)
   return dispatch => {
     firebaseDB.ref(`users/${user.uid}/stocks`).push().set({
       symbol: stock.symbol.toUpperCase(),
@@ -119,7 +115,6 @@ export function saveStock(stock, user) {
 }
 
 export function deleteStock(stockID, user) {
-  console.log('delete Stock', stockID, user)
   return dispatch => {
     firebaseDB.ref(`users/${user.uid}/stocks/${stockID}`).remove();
   }
