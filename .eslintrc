@@ -7,7 +7,7 @@
   "rules": {
     "max-len": ["error", 120],
     "no-console": "off",
-    "prefer-arrow-callback": "on",
+    "prefer-arrow-callback": 1,
     "linebreak-style": "off"
   },
   "globals": {
