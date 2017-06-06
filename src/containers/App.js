@@ -1,32 +1,30 @@
-import React, { Component } from "react"
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider"
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import Header from '../components/Header'
 import { checkUserAuth } from '../reducers/authReducer'
-import { bindActionCreators } from "redux"
+import { bindActionCreators } from 'redux'
 
-const container_style = {
+const containerStyle = {
   fontFamily: "'Roboto', sans-serif"
 }
 
 class App extends Component {
-
-  componentWillMount() {
-    this.props.checkUserAuth();
+  componentWillMount () {
+    this.props.checkUserAuth()
   }
 
-  render() {
+  render () {
     return (
       <MuiThemeProvider>
-        <div style={container_style}>
+        <div style={containerStyle}>
           <Header router={this.props.router} user={this.props.user} />
           {this.props.children}
         </div>
       </MuiThemeProvider>
-    );
+    )
   }
 }
-
 
 const mapStateToProps = store => {
   return {
@@ -34,10 +32,10 @@ const mapStateToProps = store => {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps (dispatch) {
   return bindActionCreators({
     checkUserAuth
-  }, dispatch);
+  }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

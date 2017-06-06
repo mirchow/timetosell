@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { logout } from "../reducers/authReducer";
+import { logout } from "../../reducers/authReducer";
 import { push } from "react-router-redux";
 
 

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 import TextField from "material-ui/TextField";
-import { saveStock } from "../reducers/stockReducer";
+import { saveStock } from "../../../../reducers/stockReducer";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import Save from "material-ui/svg-icons/content/save";
 

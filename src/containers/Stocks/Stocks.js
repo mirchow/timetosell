@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { selectStock, loadStocks, deleteStock, clickShowAddStock } from "./../reducers/stockReducer";
+import { selectStock, loadStocks, deleteStock, clickShowAddStock } from "../../reducers/stockReducer";
 import { bindActionCreators } from "redux";
-import Stock from "../components/StockTable";
+import Stock from "../../components/StockTable";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import ContentAdd from "material-ui/svg-icons/content/add";
-import StockAdd from "./EditStock";
+import StockAdd from "./components/EditStock/EditStock";
 import { Link } from 'react-router'
 
 const buttonStyle = {
