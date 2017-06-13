@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { firebaseUIConfig, firebaseAuthUI } from '../firebase'
+import { firebaseUIConfig, firebaseAuthUI } from '../../firebase'
 
 class Login extends Component {
 /*

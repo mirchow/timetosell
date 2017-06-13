@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { checkUserAuth, logUserPresence, saveUser } from "../reducers/authReducer";
+import { checkUserAuth, logUserPresence, saveUser } from "../../../../reducers/authReducer";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { push } from "react-router-redux";
