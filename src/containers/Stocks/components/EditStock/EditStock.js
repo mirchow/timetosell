@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { Field, reduxForm } from "redux-form";
-import TextField from "material-ui/TextField";
-import { saveStock } from "../../../../reducers/stockReducer";
-import FloatingActionButton from "material-ui/FloatingActionButton";
-import Save from "material-ui/svg-icons/content/save";
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { Field, reduxForm } from 'redux-form'
+import TextField from 'material-ui/TextField'
+import { saveStock } from '../../../../reducers/stockReducer'
+import FloatingActionButton from 'material-ui/FloatingActionButton'
+import Save from 'material-ui/svg-icons/content/save'
 
 const renderInputMaterialUI = ({input, label, meta: {touched, error}, ...custom}) =>
   <div>
@@ -19,73 +19,70 @@ const renderInputMaterialUI = ({input, label, meta: {touched, error}, ...custom}
 const buttonStyleContainers = {
   display: 'flex',
   flexFlow: 'column',
-  justifyContent: 'flex-end',
+  justifyContent: 'flex-end'
 }
 
 class StockInsert extends Component {
-
-  constructor(props) {
-    super(props);
-    this.onSubmit = this.onSubmit.bind(this);
+  constructor (props) {
+    super(props)
+    this.onSubmit = this.onSubmit.bind(this)
   }
 
-  renderField(fieldConfig) {
+  renderField (fieldConfig) {
     return (
       <Field
         name={fieldConfig.name}
         label={fieldConfig.label}
-        component={renderInputMaterialUI}/>
+        component={renderInputMaterialUI} />
     )
   }
 
-  onSubmit(data) {
+  onSubmit (data) {
     data.lastPriceTimeStamp = '-'
     data.lastPrice = 1
     data.highestPrice = 1
     data.currentTreshold = 0
     data.gain = 1
-    this.props.saveStock(data, this.props.user);
+    this.props.saveStock(data, this.props.user)
   }
 
-
-  render() {
-    const {handleSubmit, user} = this.props;
+  render () {
+    const {handleSubmit, user} = this.props
     if (!user) {
       return <div>Not logged id</div>
     }
 
     return (
       <div style={buttonStyleContainers} >
-        {/*<h3>Add new stock</h3>*/}
+        {/* <h3>Add new stock</h3> */}
         <form
           onSubmit={handleSubmit(this.onSubmit)}>
           <Field
-            name="symbol"
-            label="Symbol"
+            name='symbol'
+            label='Symbol'
             component={renderInputMaterialUI}
           />
           <Field
-            name="purchasePrice"
-            label="Purchase Price"
+            name='purchasePrice'
+            label='Purchase Price'
             component={renderInputMaterialUI}
           />
           <Field
-            name="threshold"
-            label="Threshold"
+            name='threshold'
+            label='Threshold'
             component={renderInputMaterialUI}
             defaultValue={4}
           />
-          <FloatingActionButton type="submit">
+          <FloatingActionButton type='submit'>
             <Save />
           </FloatingActionButton>
         </form>
       </div>
-    );
+    )
   }
-
 }
 
-function validate(values) {
+function validate (values) {
   const errors = {}
   // const requiredFields = ['symbol', 'shares', 'purchasePrice', 'submit']
   const requiredFields = ['symbol', 'purchasePrice', 'submit']
@@ -97,10 +94,8 @@ function validate(values) {
   return errors
 }
 
-
-StockInsert.propTypes = {};
-StockInsert.defaultProps = {};
-
+StockInsert.propTypes = {}
+StockInsert.defaultProps = {}
 
 const mapStateToProps = store => {
   return {
@@ -112,10 +107,10 @@ const mapStateToProps = store => {
 // kind of hack how to connect redux-form and redux(connect) - you have to write it on 2 lines
 // 1) do reduxForm and 2nd connect
 StockInsert = reduxForm({
-  form: 'StockInsertForm'
-  ,validate
-  })(StockInsert);
+  form: 'StockInsertForm',
+  validate
+})(StockInsert)
 
-StockInsert = connect(mapStateToProps, {saveStock})(StockInsert);
+StockInsert = connect(mapStateToProps, {saveStock})(StockInsert)
 
-export default StockInsert;
+export default StockInsert

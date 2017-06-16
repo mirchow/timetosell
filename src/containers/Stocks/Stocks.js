@@ -11,7 +11,7 @@ import { Link } from 'react-router'
 const buttonStyle = {
   display: 'flex',
   flexFlow: 'row wrap',
-  justifyContent: 'flex-end',
+  justifyContent: 'flex-end'
 }
 
 
@@ -24,7 +24,7 @@ class Stocks extends Component {
   }
 
   state = {
-    fetching: false,
+    fetching: false
   }
 
   componentWillMount() {
