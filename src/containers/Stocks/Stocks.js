@@ -46,7 +46,6 @@ class Stocks extends Component {
   }
 
   onEditStock(stock) {
-    console.log('editStock', stock);
     this.props.selectStock(stock)
   }
 
