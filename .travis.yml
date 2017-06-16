@@ -10,6 +10,7 @@ addons:
     organization: "chowanioksource"
     branches :
       - develop
+      - master
 
 jdk:
   - oraclejdk8
