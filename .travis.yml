@@ -8,6 +8,8 @@ sudo: required
 addons:
   sonarqube:
     organization: "chowanioksource"
+    branches :
+      - develop
 
 jdk:
   - oraclejdk8
