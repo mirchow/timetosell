@@ -1,4 +1,23 @@
-sudo: false
 language: node_js
 node_js:
-  - "6"
+  - "7"
+
+dist: trusty
+sudo: required
+
+addons:
+  sonarqube:
+    organization: "chowanioksource"
+    branches :
+      - develop
+      - master
+
+jdk:
+  - oraclejdk8
+
+script:
+  - sonar-scanner
+
+cache:
+  directories:
+    - '$HOME/.sonar/cache'
