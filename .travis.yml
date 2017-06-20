@@ -3,7 +3,8 @@ node_js:
   - "7"
 
 dist: trusty
-sudo: required
+sudo: false
+group: edge
 
 addons:
   sonarqube:
@@ -11,9 +12,9 @@ addons:
     branches :
       - develop
       - master
+    token:
+        secure: VFVd49vHYHJJvbvzrDPsE3/JALuimm6MwUZTCDry5Mu4PHkG7Xwz+CRsbdcG8wRLTyLfp3WdGQFrT9NA6dH2oR2XIm6zyM0XkXXof5txpptaVLwVqZ042yQxLTsbo3Uz437xi1eQGnocs7L1dDBAwp/3TKo56kmJ8Tskwg91poVD7i0z4pHMd4O0sUP+SiGN+NDcx8RHZ4WqpZ+KJfHUgJnjGzSv6+mdabjefab+WXK6acRFE2riF6U82bUf2S9zPu+8VNZwUQC3RWFGXEprCThqNqjBTgoVnfd6E4HMhs51Fk4pWuP9zbc/o+hk3lVVStaVVQH/PFdE9CdiIzCjTk9m0zQXU6keQCmNgDvNrVlNxc2EYZm/feLdTlpQZT4cxjEWRDlMV+MjFl07oFClexhSoIgfBOH8g0/i9srYUquW702oIhmCNwKGj9VlzH2T5DAAO74BfPEHN0dk8UJOUsRdNMp7gwUzEbaFEfuuYJEl2ucyepC/81XjyaWkgOGurwix60rK31ygpKB4gKs93vkD/zGa3/SLmyOAaDnGQf4fcQ+0HUd0aIpkJsY+CKnjgMOj8Ty5IUFxWIfd9fKjlqBLZAoi9WvcJU5uBAAA2D5FePF/lX4d9rfVuzjRaSmdifYQZm3BLpyhd9PCOiMVoFctxqLy0X1aBmqoXCjgz/g=
 
-jdk:
-  - oraclejdk8
 
 script:
   - sonar-scanner
