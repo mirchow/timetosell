@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import { AppBar, Avatar, IconButton, IconMenu, MenuItem } from 'material-ui'
+import ActionAccountCircle from 'material-ui/svg-icons/action/account-circle'
+import { Link } from 'react-router-dom'
+
 /**
 * material UI icons
 * google material icons site - https://design.google.com/icons/
@@ -10,8 +13,6 @@ import { AppBar, Avatar, IconButton, IconMenu, MenuItem } from 'material-ui'
 * so the React component class is: [File][CloudDownload]
 * so the import is: material-ui/svg-icons/[file]/[cloud-download]
 */
-import ActionAccountCircle from 'material-ui/svg-icons/action/account-circle'
-import { Link } from 'react-router'
 
 const titleString = 'Time To Sell'
 const avatar_icon_size = 32
@@ -21,28 +22,18 @@ const custom_padding = {
 // from https://github.com/r3bl-alliance/starterproject_todolist_react_firebase_ts_md/blob/master/src/client/ui/header.js
 
 class Header extends Component {
-
-  loginAction() {
-    // <Link to="/login">Login</Link>
-    console.log('loginAction')
-  }
-
   render() {
-    const { router, user } = this.props
-    console.log('router', router)
-    console.log('user', user)
+    const { user } = this.props
     const authenticated = user && user.providerData
     let appbar = ''
     if (authenticated) {
-      appbar =
+      appbar = (
         <AppBar
           title={titleString}
           iconElementRight={
             <IconMenu
               iconButtonElement={
-                <IconButton
-                  style={custom_padding}
-                >
+                <IconButton style={custom_padding}>
                   <Avatar
                     size={avatar_icon_size}
                     src={authenticated ? user.providerData[0].photoURL : ''}
@@ -50,32 +41,43 @@ class Header extends Component {
                 </IconButton>
               }
             >
-              <MenuItem >
+              <MenuItem>
+                <Link to="/logout">Logout</Link>
+              </MenuItem>
+              <MenuItem>
+                <Link to="/">Home</Link>
+              </MenuItem>
+              <MenuItem>
+                <Link to="/addStock">Add Stock</Link>
+              </MenuItem>
+            </IconMenu>
+          }
+        />
+      )
+    } else {
+      // not yet logged in
+      appbar = (
+        <AppBar
+          title={titleString}
+          iconElementRight={
+            <IconMenu
+              iconButtonElement={
+                <IconButton style={custom_padding}>
+                  <Avatar
+                    size={avatar_icon_size}
+                    onTouchTap={this.loginAction}
+                    icon={<ActionAccountCircle />}
+                  />
+                </IconButton>
+              }
+            >
+              <MenuItem>
                 <Link to="/login">Login</Link>
               </MenuItem>
             </IconMenu>
           }
         />
-    } else {
-      // not yet logged in
-      appbar =
-        <AppBar
-          title={titleString}
-          iconElementRight={
-            <IconButton
-              style={custom_padding}
-            >
-              <Avatar
-                size={avatar_icon_size}
-                onTouchTap={this.loginAction}
-                icon={<ActionAccountCircle />}
-              />
-            </IconButton>
-          }
-          iconElementLeft={
-            <Link to="/login">Login</Link>
-          }
-        />
+      )
     }
     return appbar
   }
