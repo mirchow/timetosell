@@ -6,7 +6,7 @@ import Stock from "../components/StockTable";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import ContentAdd from "material-ui/svg-icons/content/add";
 import StockAdd from "./EditStock";
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom'
 
 const buttonStyle = {
   display: 'flex',

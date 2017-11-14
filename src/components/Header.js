@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { AppBar, Avatar, IconButton, IconMenu, MenuItem } from 'material-ui'
 import ActionAccountCircle from 'material-ui/svg-icons/action/account-circle'
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom'
 
 /**
 * material UI icons
@@ -22,21 +22,18 @@ const custom_padding = {
 // from https://github.com/r3bl-alliance/starterproject_todolist_react_firebase_ts_md/blob/master/src/client/ui/header.js
 
 class Header extends Component {
-
   render() {
     const { user } = this.props
     const authenticated = user && user.providerData
     let appbar = ''
     if (authenticated) {
-      appbar =
+      appbar = (
         <AppBar
           title={titleString}
           iconElementRight={
             <IconMenu
               iconButtonElement={
-                <IconButton
-                  style={custom_padding}
-                >
+                <IconButton style={custom_padding}>
                   <Avatar
                     size={avatar_icon_size}
                     src={authenticated ? user.providerData[0].photoURL : ''}
@@ -44,8 +41,8 @@ class Header extends Component {
                 </IconButton>
               }
             >
-              <MenuItem >
-                <Link to="/logout" >Logout</Link>
+              <MenuItem>
+                <Link to="/logout">Logout</Link>
               </MenuItem>
               <MenuItem>
                 <Link to="/">Home</Link>
@@ -56,17 +53,16 @@ class Header extends Component {
             </IconMenu>
           }
         />
+      )
     } else {
       // not yet logged in
-      appbar =
+      appbar = (
         <AppBar
           title={titleString}
           iconElementRight={
             <IconMenu
               iconButtonElement={
-                <IconButton
-                  style={custom_padding}
-                >
+                <IconButton style={custom_padding}>
                   <Avatar
                     size={avatar_icon_size}
                     onTouchTap={this.loginAction}
@@ -81,6 +77,7 @@ class Header extends Component {
             </IconMenu>
           }
         />
+      )
     }
     return appbar
   }

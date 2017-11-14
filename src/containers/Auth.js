@@ -1,16 +1,18 @@
-import React, { Component } from "react";
-import { checkUserAuth, logUserPresence, saveUser } from "../reducers/authReducer";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { push } from "react-router-redux";
-import { Link } from "react-router";
+import React, { Component } from 'react'
+import {
+  checkUserAuth,
+  logUserPresence,
+  saveUser
+} from '../reducers/authReducer'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { Link, withRouter } from 'react-router-dom'
 
 class Auth extends Component {
-
   componentDidUpdate() {
     this.props.saveUser(this.props.user)
     this.props.logUserPresence(this.props.user)
-    this.props.push('/')
+    this.props.history.push('/')
   }
 
   render() {
@@ -21,12 +23,12 @@ class Auth extends Component {
       <div>
         <Link to="/">Stocks</Link>
       </div>
-    );
+    )
   }
 }
 
-Auth.propTypes = {};
-Auth.defaultProps = {};
+Auth.propTypes = {}
+Auth.defaultProps = {}
 
 const mapStateToProps = store => {
   return {
@@ -35,12 +37,14 @@ const mapStateToProps = store => {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    checkUserAuth,
-    saveUser,
-    logUserPresence,
-    push
-  }, dispatch);
+  return bindActionCreators(
+    {
+      checkUserAuth,
+      saveUser,
+      logUserPresence
+    },
+    dispatch
+  )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Auth)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Auth))
