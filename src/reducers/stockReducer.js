@@ -1,5 +1,5 @@
-import _ from "lodash";
-import { firebaseDB } from "./../firebase";
+import _ from 'lodash'
+import { firebaseDB } from './../firebase'
 
 // TYPES
 const LOAD_STOCKS = 'LOAD_STOCKS'
@@ -12,11 +12,11 @@ const INITIAL_STATE = {
   loaded: false,
   selectedStock: {},
   showAddStock: false
-};
+}
 
-// const user = '/users/jMa0kEgnUQdxn4rNDTGsW6gB5uG2';
+const Stocks = firebaseDB.ref('/users/jMa0kEgnUQdxn4rNDTGsW6gB5uG2')
 
-export default function (state = INITIAL_STATE, action) {
+export default function(state = INITIAL_STATE, action) {
   switch (action.type) {
     case LOAD_STOCKS:
       return {
@@ -30,11 +30,10 @@ export default function (state = INITIAL_STATE, action) {
         selectedStock: action.selectedStock
       }
     // case SELECT_STOCK:
-    //   if (_.some(state.stocks, {id: action.payload.id})) {
-    //     return state;
+    // if (_.some( state.   stocks, {       id: action.payload.id })) {
+    //       return state;
     //   }
-    //   return {
-    //     stocks: [...state.stocks, {...action.payload}]
+    // return {//stocks: [...state.stocks, {... action.payload}]
     //   };
     case SHOW_ADD_STOCK:
       return {
@@ -42,7 +41,7 @@ export default function (state = INITIAL_STATE, action) {
         showAddStock: action.showAddStock
       }
     default:
-      return state;
+      return state
   }
 }
 
@@ -76,9 +75,9 @@ export function loadStocks(user) {
       dispatch({
         type: LOAD_STOCKS,
         stocks: stockArray
-      });
-    });
-  };
+      })
+    })
+  }
 }
 
 export function selectStock(stock) {
@@ -97,27 +96,19 @@ export function clickShowAddStock(value) {
 
 export function saveStock(stock, user) {
   return dispatch => {
-    firebaseDB.ref(`users/${user.uid}/stocks`).push().set({
-      symbol: stock.symbol.toUpperCase(),
-      purchasePrice: stock.purchasePrice,
-      highestPrice: stock.purchasePrice,
-      lastPrice: stock.lastPrice,
-      lastPriceTimeStamp: stock.lastPriceTimeStamp
-    });
-
-    dispatch({
-      type: SHOW_ADD_STOCK,
-      showAddStock: false
+    Stocks.on('value', snapshot => {
+      dispatch({
+        type: LOAD_STOCKS,
+        stocks: snapshot.val().stocks
+      })
     })
-
-    fetch("https://us-central1-time2sell-e2178.cloudfunctions.net/updateStocks")
   }
+
+  fetch('https://us-central1-time2sell-e2178.cloudfunctions.net/updateStocks')
 }
 
 export function deleteStock(stockID, user) {
   return dispatch => {
-    firebaseDB.ref(`users/${user.uid}/stocks/${stockID}`).remove();
+    firebaseDB.ref(`users/${user.uid}/stocks/${stockID}`).remove()
   }
 }
-
-
